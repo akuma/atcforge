@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="gb2312"?>
+<control enable="1">
+	<action index="8" name="Login" enable="1" order="1" description="登录测试">
+	</action>
+	
+	<action index="1" name="Message" enable="1" order="2" description="短信箱测试">
+		<function name="SendMessage" enable="1" order="" description="发送留言"/>
+		<function name="GetMessage" enable="1" order="" description="检查留言"/>
+	</action>
+	
+	<action index="4" name="ManagerTeacher" enable="1" order="4" description="教师信息维护测试">
+		<function name="AddTeacherGroup" enable="0" order="2" description="添加教师组"/>
+		<function name="AddTeacher" enable="1" order="1" description="添加教师"/>
+		<function name="ModifyTeacher" enable="0" order="3" description="修改教师"/>
+		<function name="DeleteTeacher" enable="1" order="4" description="删除教师"/>
+	</action>	
+		
+	<action index="3" name="ManagerStudent" enable="0" order="6" description="学生信息管理测试">
+		<function name="AddGrade" enable="1" order="" description="添加年级"/>
+		<function name="AddClass" enable="1" order="" description="添加班级"/>
+		<function name="AddStudent" enable="1" order="" description="添加学生"/>
+		<function name="AddParents" enable="1" order="" description="添加家长"/>
+		<function name="ModifyParents" enable="1" order="" description="修改家长"/>
+		<function name="DeleteParents" enable="1" order="" description="删除家长"/>
+		<function name="ModifyStudent" enable="1" order="" description="修改学生"/>
+		<function name="DeleteStudent" enable="1" order="" description="删除学生"/>
+	</action>	
+	
+	<action index="6" name="ImportTeacher" enable="0" order="3" description="教师导入测试">
+		<function name="TeacherOutput" enable="1" order="" description="教师导出"/>
+		<function name="TeacherOutputTemplate" enable="1" order="" description="教师模板导出"/>
+		<function name="TeacherImport" enable="1" order="" description="教师导入"/>
+	</action>	
+	
+	<action index="9" name="Logout" enable="1" order="5" description="退出测试">
+	</action>				
+</control>

@@ -1,0 +1,30 @@
+$def with (controls, form)
+
+<table id="data_list">
+  <tr>
+    <td>文件名称</td>
+    <td>文件编码</td>
+    <td>是否启用</td>
+    <td>描述信息</td>
+    <td>修改时间</td>
+    <td>创建时间</td>
+  </tr>
+$for control in controls:
+  <tr>
+    <td>$control.name</td>
+    <td>$control.encoding</td>
+    <td>$control.is_enable</td>
+    <td>$control.description</td>
+    <td>$control.modify_time</td>
+    <td>$control.creation_time</td>
+    <td>
+      <form action="/del/$control.id" method="post">
+        <input type="submit" value="Delete"/>
+      </form>
+    </td>
+  </tr>
+</table>
+
+<form action="" method="post">
+$:form.render()
+</form>
