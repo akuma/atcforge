@@ -1,6 +1,6 @@
 #coding=utf-8
 
-""" Basic todo list using webpy 0.3 """
+""" Autotest manager app using webpy 0.3 """
 
 import web
 import model
@@ -9,7 +9,8 @@ import model
 
 urls = (
     '/', 'Index',
-    '/del/(\d+)', 'Delete'
+    '/control/(.+)', 'ViewControl'
+    '/del/(.+)', 'DeleteControl'
 )
 
 
@@ -20,11 +21,12 @@ render = web.template.render('templates', base='base')
 class Index:
 
     form = web.form.Form(
-        web.form.Textbox('name', web.form.notnull, description='控制文件名称'),
-        web.form.Textbox('encoding', web.form.notnull, description='文件编码'),
-        web.form.Textbox('is_enable', web.form.notnull, description='是否启用'),
-        web.form.Textbox('description', web.form.notnull, description='描述信息'),
-        web.form.Button('Add control file'),
+        web.form.Textbox('name', web.form.notnull, description='文件名称', class_='titleTd'),
+        web.form.Dropdown('encoding', ['UTF-8', 'GBK'], web.form.notnull, description='文件编码'),
+        web.form.Dropdown('is_enable', ['YES', 'NO'], web.form.notnull, description='是否启用'),
+        web.form.Textarea('description', web.form.notnull,
+            rows=10, cols=80, description='描述信息'),
+        web.form.Button(' 保存 ', class_='colorButton'),
     )
 
     def GET(self):
@@ -42,11 +44,16 @@ class Index:
         model.new_control(form.d.name, form.d.encoding, form.d.is_enable, form.d.description)
         raise web.seeother('/')
 
+class ViewControl:
 
+    def GET(self, id):
+        """ Select based on ID """
+        control = model.get_control(id)
+        return render.index(control, form)
 
-class Delete:
+class DeleteControl:
 
-    def POST(self, id):
+    def GET(self, id):
         """ Delete based on ID """
         model.del_control(id)
         raise web.seeother('/')
