@@ -9,8 +9,9 @@ import model
 
 urls = (
     '/', 'Index',
-    '/control/(.+)', 'ViewControl'
-    '/del/(.+)', 'DeleteControl'
+    '/control/(.+)/del', 'DeleteControl',
+    '/control/(.+)', 'ViewControl',
+    '/hello/(.+)', 'Hello',
 )
 
 
@@ -38,9 +39,11 @@ class Index:
     def POST(self):
         """ Add new control file """
         form = self.form()
+
         if not form.validates():
             controls = model.get_controls()
             return render.index(controls, form)
+
         model.new_control(form.d.name, form.d.encoding, form.d.is_enable, form.d.description)
         raise web.seeother('/')
 
@@ -49,14 +52,33 @@ class ViewControl:
     def GET(self, id):
         """ Select based on ID """
         control = model.get_control(id)
-        return render.index(control, form)
+        form = Index.form()
+        form.fill(control)
+        controls = model.get_controls()
+        return render.index(controls, form)
+
+    def POST(self, id):
+        form = Index.form()
+        """control = model.get_control(id)"""
+
+        if not form.validates():
+            """form.fill(control)"""
+            controls = model.get_controls()
+            return render.index(controls, form)
+
+        model.update_control(id, form.d.name, form.d.encoding, form.d.is_enable, form.d.description)
+        raise web.seeother('/')
 
 class DeleteControl:
 
     def GET(self, id):
-        """ Delete based on ID """
         model.del_control(id)
         raise web.seeother('/')
+
+class Hello:
+
+    def GET(self, name):
+        return "Hello %s!" %name
 
 app = web.application(urls, globals())
 

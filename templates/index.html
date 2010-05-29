@@ -3,7 +3,7 @@ $def with (controls, form)
 <div id="navigator">控制文件管理 &gt;&gt; 控制文件列表</div>
 <div id="titleMain">
   <div class="modules">
-    <div id="current"><a href="." class="current">控制文件列表</a></div>
+    <div id="current"><a href="/" class="current">控制文件列表</a></div>
     <div class="unusable">Action 维护</div>
   </div>
 </div>
@@ -30,7 +30,7 @@ $def with (controls, form)
       <td align="center">$control.creation_time</td>
       <td align="center">
         <a href="/control/$control.id">查看</a>
-        <a href="/del/$control.id">删除</a>
+        <a href="/control/$control.id/del">删除</a>
       </td>
     </tr>
   </table>
