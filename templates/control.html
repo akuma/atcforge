@@ -1,39 +1,21 @@
 $def with (control, form)
 
-<div id="navigator">控制文件管理 &gt;&gt; 控制文件列表</div>
+$ operation = "新增" if control == None else "修改"
+
+<div id="navigator">控制文件管理 &gt;&gt; $operation控制文件</div>
 <div id="titleMain">
   <div class="modules">
-    <div id="current"><a href="." class="current">控制文件列表</a></div>
-    <div class="unusable">Action 维护</div>
+    <div class="other"><a href="../control" class="other">控制文件列表</a></div>
+    $if control == None:
+      <div id="current"><a href="" class="current">新增控制文件</a></div>
+      <div class="unusable">修改控制文件</div>
+    $else:
+      <div class="other"><a href="control/new" class="other">新增控制文件</a></div>
+      <div id="current"><a href="" class="current">修改控制文件</a></div>
   </div>
 </div>
 <div id="tableMain">
-  <div id="desc">控制文件列表</div>
   <div id="message"></div>
-  <table id="dataTable" border="0" align="center" cellpadding="5" cellspacing="1"> 
-    <tr class="titleTr"> 
-      <td align="center">文件名称</td>
-      <td align="center">文件编码</td>
-      <td align="center">是否启用</td>
-      <td align="center">描述信息</td>
-      <td align="center">修改时间</td>
-      <td align="center">创建时间</td>
-      <td align="center">操作</td>
-    </tr>
-    $for control in controls:
-    <tr>
-      <td>$control.name</td>
-      <td align="center">$control.encoding</td>
-      <td align="center">$control.is_enable</td>
-      <td>$control.description</td>
-      <td align="center">$control.modify_time</td>
-      <td align="center">$control.creation_time</td>
-      <td align="center">
-        <a href="/control/$control.id">查看</a>
-        <a href="/del/$control.id">删除</a>
-      </td>
-    </tr>
-  </table>
   <div id="dataForm">
     <form action="" method="post">
       $:form.render()
