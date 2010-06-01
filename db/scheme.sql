@@ -9,7 +9,7 @@ create table at_control (
 );
 
 insert into at_control(id, name)
-values('c2ba5540514c11dfbead000e35b49aba', '¼ÒĞ£»¥Áª Control file');
+values('c2ba5540514c11dfbead000e35b49aba', 'å®¶æ ¡äº’è” Control file');
 
 create table at_action (
     id integer AUTO_INCREMENT,
@@ -24,10 +24,10 @@ create table at_action (
 );
 
 insert into at_action(control_id, name, action_order, description)
-values('c2ba5540514c11dfbead000e35b49aba', 'Login', 1, 'µÇÂ¼²âÊÔ');
+values('c2ba5540514c11dfbead000e35b49aba', 'Login', 1, 'ç™»å½•æµ‹è¯•');
 
 insert into at_action(id, control_id, name, action_order, description)
-values(2, 'c2ba5540514c11dfbead000e35b49aba', 'Message', 2, '¶ÌĞÅÏä²âÊÔ');
+values(2, 'c2ba5540514c11dfbead000e35b49aba', 'Message', 2, 'çŸ­ä¿¡ç®±æµ‹è¯•');
 
 create table at_function (
     id char(32) not null primary key,
@@ -40,7 +40,7 @@ create table at_function (
 );
 
 insert into at_function(id, action_id, name, description)
-values('ebb92cf0514c11dfbfa9000e35b49aba', 1, 'SendMessage', '·¢ËÍÁôÑÔ');
+values('ebb92cf0514c11dfbfa9000e35b49aba', 1, 'SendMessage', 'å‘é€ç•™è¨€');
 
 insert into at_function(id, action_id, name, description)
-values('1ce58621514d11df8231000e35b49aba', 1, 'GetMessage', '¼ì²éÁôÑÔ');
+values('1ce58621514d11df8231000e35b49aba', 1, 'GetMessage', 'æ£€æŸ¥ç•™è¨€');
