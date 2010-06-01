@@ -13,7 +13,6 @@ values('c2ba5540514c11dfbead000e35b49aba', '家校互联 Control file');
 
 create table at_action (
     id integer AUTO_INCREMENT,
-    control_id char(32) not null,
     name varchar(50) not null,
     action_order int not null,
     is_enable integer default 1 not null,
@@ -23,11 +22,23 @@ create table at_action (
     primary key (id)
 );
 
-insert into at_action(control_id, name, action_order, description)
-values('c2ba5540514c11dfbead000e35b49aba', 'Login', 1, '登录测试');
+create table at_control_action (
+    id char(32) not null primary key,
+    control_id char(32) not null,
+    action_id integer not null
+);
 
-insert into at_action(id, control_id, name, action_order, description)
-values(2, 'c2ba5540514c11dfbead000e35b49aba', 'Message', 2, '短信箱测试');
+insert into at_action(name, action_order, description)
+values('Login', 1, '登录测试');
+
+insert into at_action(name, action_order, description)
+values('Message', 2, '短信箱测试');
+
+insert into at_control_action(id, control_id, action_id)
+values('c2ba5540514c12dfbead000e35b49ab0', 'c2ba5540514c11dfbead000e35b49aba', 1);
+
+insert into at_control_action(id, control_id, action_id)
+values('c2ba5540514c12dfbead000e35b49ab1', 'c2ba5540514c11dfbead000e35b49aba', 2);
 
 create table at_function (
     id char(32) not null primary key,
