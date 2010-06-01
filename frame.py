@@ -1,5 +1,6 @@
 #coding=utf-8
 
+from template import render
 from template import render_plain
 
 class Frame:
@@ -11,3 +12,8 @@ class Menu:
 
     def GET(self):
         return render_plain.menu()
+
+class NotFound:
+
+    def GET(self):
+        return render.notFound()

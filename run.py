@@ -16,6 +16,7 @@ urls = (
     '/control/(.+)/del', 'control.Delete',
     '/control/(.+)', 'control.Edit',
     '/hello/(.+)', 'control.Hello',
+    '.+', 'frame.NotFound',
 )
 
 app = web.application(urls, globals())
