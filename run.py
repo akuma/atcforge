@@ -1,8 +1,7 @@
 #coding=utf-8
 
-"""run.py"""
-
 import web
+import frame
 import control
 #import action
 #import function
@@ -10,8 +9,8 @@ import control
 
 ### Url mappings
 urls = (
-    '/', 'control.Frame',
-    '/menu', 'control.Menu',
+    '/', 'frame.Frame',
+    '/menu', 'frame.Menu',
     '/control', 'control.Index',
     '/control/new', 'control.New',
     '/control/(.+)/del', 'control.Delete',

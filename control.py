@@ -1,5 +1,6 @@
 #coding=utf-8
 
+
 import web
 import model
 from template import render
@@ -22,13 +23,13 @@ class New:
 
     def GET(self):
         form = self.form()
-        return render.control(None, form)
+        return render.controlNew(form)
 
     def POST(self):
         form = self.form()
 
         if not form.validates():
-            return render.control(None, form)
+            return render.controlNew(form)
 
         model.new_control(form.d.name, form.d.encoding, form.d.is_enable, form.d.description)
         raise web.seeother('/control')
@@ -39,13 +40,13 @@ class Edit:
         control = model.get_control(id)
         form = New.form()
         form.fill(control)
-        return render.control(control, form)
+        return render.controlEdit(form)
 
     def POST(self, id):
         form = New.form()
 
         if not form.validates():
-            return render.control('', form)
+            return render.controlEdit(form)
 
         model.update_control(id, form.d.name, form.d.encoding, form.d.is_enable, form.d.description)
         raise web.seeother('/control')
@@ -60,13 +61,3 @@ class Hello:
 
     def GET(self, name):
         return "Hello %s!" %name
-
-class Frame:
-
-    def GET(self):
-        return render.frame()
-
-class Menu:
-
-    def GET(self):
-        return render.menu()
