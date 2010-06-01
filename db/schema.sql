@@ -12,13 +12,12 @@ insert into at_control(id, name)
 values('c2ba5540514c11dfbead000e35b49aba', '家校互联 Control file');
 
 create table at_action (
-    id integer AUTO_INCREMENT,
+    id integer primary key,
     name varchar(50) not null,
     is_enable integer default 1 not null,
     description varchar(100) null,
     modify_time timestamp default CURRENT_TIMESTAMP not null,
-    creation_time timestamp default CURRENT_TIMESTAMP not null,
-    primary key (id)
+    creation_time timestamp default CURRENT_TIMESTAMP not null
 );
 
 create table at_control_action (
@@ -28,11 +27,11 @@ create table at_control_action (
     action_order integer not null
 );
 
-insert into at_action(id, name, description)
-values(null, 'Login', '登录测试');
+insert into at_action(name, description)
+values('Login', '登录测试');
 
-insert into at_action(id, name, description)
-values(null, 'Message', '短信箱测试');
+insert into at_action(name, description)
+values('Message', '短信箱测试');
 
 insert into at_control_action(id, control_id, action_id, action_order)
 values('c2ba5540514c12dfbead000e35b49ab0', 'c2ba5540514c11dfbead000e35b49aba', 1, 1);

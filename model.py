@@ -35,11 +35,12 @@ def get_action(id):
     except IndexError:
         return None
 
-def new_action(name, action_order, is_enable, description):
-    db.insert('at_action', name=name, action_order=action_order, is_enable=is_enable, description=description)
+def new_action(name, is_enable, description):
+    id = None
+    db.insert('at_action', id=id, name=name, is_enable=is_enable, description=description)
 
-def update_action(id, name, action_order, is_enable, description):
-    db.update('at_action', where="id=$id", vars=locals(), name=name, action_order=action_order, is_enable=is_enable, description=description)
+def update_action(id, name, is_enable, description):
+    db.update('at_action', where="id=$id", vars=locals(), name=name, is_enable=is_enable, description=description)
 
 def del_action(id):
     db.delete('at_action', where="id=$id", vars=locals())
