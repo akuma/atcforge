@@ -41,7 +41,7 @@ values('c2ba5540514c12dfbead000e35b49ab1', 'c2ba5540514c11dfbead000e35b49aba', 2
 
 create table at_function (
     id char(32) not null primary key,
-    action_id char(32) not null,
+    action_id integer not null,
     name varchar(50) not null,
     is_enable integer default 1 not null,
     description varchar(100) null,
