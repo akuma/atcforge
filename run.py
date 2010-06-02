@@ -4,8 +4,7 @@ import web
 import frame
 import control
 import action
-#import function
-#import delegate
+import function
 
 ### Url mappings
 urls = (
@@ -22,7 +21,11 @@ urls = (
     '/action', 'action.Index',
     '/action/new', 'action.New',
     '/action/(.+)/del', 'action.Delete',
+	'/action/(.+)/fun', 'function.Index',
     '/action/(.+)', 'action.Edit',
+    #'/function/new', 'function.New',
+    #'/function/(.+)/del', 'function.Delete',
+    #'/function/(.+)', 'function.Edit',	
     # 404 page
     '.+', 'frame.NotFound'
 )
