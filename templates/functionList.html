@@ -7,12 +7,16 @@ $var title: Function 列表
     <div class="other"><a href="/action" class="other">Action 列表</a></div>
     <div class="other"><a href="/action/new" class="other">新增 Action</a></div>
     <div class="unusable">修改 Action</div>
-    <div id="current"><a href="" class="current">Function 列表</div>
+    <div id="current"><a href="" class="current">Function 列表</a></div>
+    <div class="unusable">新增 Function</div>
+    <div class="unusable">修改 Function</div>
   </div>
 </div>
 <div id="tableMain">
   <div id="desc">Function 列表</div>
-  <div id="message"></div>
+  <div id="message">
+    <input type="button" class="colorButton" name="addBtn" value="新增 Function" onclick="alert('^^')" />
+  </div>
   <table id="dataTable" border="0" align="center" cellpadding="5" cellspacing="1"> 
     <tr class="titleTr">
       <td align="center">名称</td>
