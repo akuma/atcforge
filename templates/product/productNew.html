@@ -1,0 +1,19 @@
+$def with (form)
+$var title: 新增产品信息
+
+<div id="navigator">产品信息维护 &gt;&gt; 新增产品信息</div>
+<div id="titleMain">
+  <div class="modules">
+    <div class="other"><a href="../product" class="other">产品信息列表</a></div>
+    <div id="current"><a href="" class="current">新增产品信息</a></div>
+    <div class="unusable">修改产品信息</div>
+  </div>
+</div>
+<div id="tableMain">
+  <div id="message"></div>
+  <div id="dataForm">
+    <form action="" method="post">
+      $:form.render()
+    </form>
+  </div>
+</div>

@@ -9,12 +9,17 @@ import function
 
 ### Url mappings
 urls = (
+    '/hello/(.+)', 'control.Hello',
+
     # frame module
     '/', 'frame.Frame',
     '/menu', 'frame.Menu',
 
     # product module
-    '/product', product.app,
+    '/product', 'product.Index',
+    '/product/new', 'product.New',
+    '/product/(.+)/del', 'product.Delete',
+    '/product/(.+)', 'product.Edit',
 
     # control module
     '/control', 'control.Index',
