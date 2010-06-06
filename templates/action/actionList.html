@@ -22,14 +22,13 @@ function changeProduct(product_id) {
   <div id="desc">
     所属产品：
     <select name="product_id" onchange="changeProduct(this.value)">
-      $if products:
-        $for product in products:
-          $if product.id == product_id:
-            <option value="$product.id" selected="selected">$product.cname</option>
-          $else:
-            <option value="$product.id">$product.cname</option>
-      $else:
-        <option value="">请先维护产品信息</option>
+      $for product in products:
+        $if product.id == product_id:
+          <option value="$product.id" selected="selected">$product.cname</option>
+        $else:
+          <option value="$product.id">$product.cname</option>
+      $if not products:
+      <option value="">请先维护产品信息</option>
     </select>
   </div>
   <table id="dataTable" border="0" align="center" cellpadding="5" cellspacing="1"> 

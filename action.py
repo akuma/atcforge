@@ -31,16 +31,18 @@ def new_form(is_modify=False, product_id=None):
             web.form.Button(' 保存 ', class_='colorButton')
         )
     else:
-        #serial_check = web.form.Validator('Action 编号已经存在', lambda x: action_model.serial_exists(x.product_id, x.serial))
-        serial_check = web.form.Validator('Action 编号已经存在', lambda x: x.serial < 3)
+        #action_model.serial_exists(1, 2)
+        serial_check = web.form.Validator('Action 编号已经存在', lambda x:
+                                          action_model.serial_exists(x.product_id, x.serial))
+#        serial_check = web.form.Validator('Action 编号已经存在', lambda x: int(x.serial) < 3)
         form = web.form.Form(
             web.form.Dropdown('product_id', product_vals, web.form.notnull, description='所属产品'),
-            web.form.Textbox('serial', web.form.notnull, description='编号', class_='titleTd', validator=serial_check),
+            web.form.Textbox('serial', web.form.notnull, description='编号', class_='titleTd'),
             web.form.Textbox('name', web.form.notnull, description='名称', class_='titleTd'),
             web.form.Dropdown('state', [('1', '正常'), ('0', '废弃')], web.form.notnull, description='状态'),
             web.form.Textarea('description', web.form.notnull, rows=10, cols=80, description='描述信息'),
             web.form.Button(' 保存 ', class_='colorButton'),
-            #validators = [serial_check]
+            validators=[serial_check]
         )
 
     return form
@@ -48,7 +50,7 @@ def new_form(is_modify=False, product_id=None):
 class Index:
 
     def GET(self, product_id=None):
-        products = product_model.get_products()
+        products = list(product_model.get_products())
 
         if products:
             if not product_id:

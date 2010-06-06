@@ -1,6 +1,6 @@
 #coding=utf-8
 
-#import model
+import model
 from model import db
 
 ### Product CRUD
