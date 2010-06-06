@@ -2,7 +2,6 @@
 
 import web
 import product_model
-#import template.render
 from template import render
 
 urls = (

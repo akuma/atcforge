@@ -1,14 +1,20 @@
 #coding=utf-8
 
-
 import web
-import model
+import control_model
 from template import render
+
+urls = (
+    '/?', 'Index',
+    '/new', 'New',
+    '/(.+)/del', 'Delete',
+    '/(.+)', 'Edit'
+)
 
 class Index:
 
     def GET(self):
-        controls = model.get_controls()
+        controls = control_model.get_controls()
         return render.index(controls)
 
 class New:
@@ -31,13 +37,13 @@ class New:
         if not form.validates():
             return render.controlNew(form)
 
-        model.new_control(form.d.name, form.d.encoding, form.d.is_enable, form.d.description)
+        control_model.new_control(form.d.name, form.d.encoding, form.d.is_enable, form.d.description)
         raise web.seeother('/control')
 
 class Edit:
 
     def GET(self, id):
-        control = model.get_control(id)
+        control = control_model.get_control(id)
         form = New.form()
         form.fill(control)
         return render.controlEdit(form)
@@ -48,16 +54,13 @@ class Edit:
         if not form.validates():
             return render.controlEdit(form)
 
-        model.update_control(id, form.d.name, form.d.encoding, form.d.is_enable, form.d.description)
+        control_model.update_control(id, form.d.name, form.d.encoding, form.d.is_enable, form.d.description)
         raise web.seeother('/control')
 
 class Delete:
 
     def GET(self, id):
-        model.del_control(id)
+        control_model.del_control(id)
         raise web.seeother('/control')
 
-class Hello:
-
-    def GET(self, name):
-        return "Hello %s!" %name
+app = web.application(urls, globals())

@@ -1,11 +1,7 @@
 #coding=utf-8
 
-import web
-#import uuid
-#import model.db
+#import model
 from model import db
-
-#db = web.database(dbn='sqlite', db='atcforge.db')
 
 ### Product CRUD
 def get_products():
@@ -18,7 +14,7 @@ def get_product(id):
         return None
 
 def new_product(ename, cname, description):
-    id = model.uuid()
+    id = model.guid()
     db.insert('at_product', id=id, ename=ename, cname=cname, description=description)
 
 def update_product(id, ename, cname, description):

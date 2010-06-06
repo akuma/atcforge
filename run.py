@@ -3,34 +3,26 @@
 import web
 import frame
 import product
-import control
 import action
-import function
+#import function
+#import control
 
 ### Url mappings
 urls = (
     # frame module
-    '/', 'frame.Frame',
-    '/menu', 'frame.Menu',
+    '/frame', frame.app,
 
     # product module
     '/product', product.app,
 
-    # control module
-    '/control', 'control.Index',
-    '/control/new', 'control.New',
-    '/control/(.+)/del', 'control.Delete',
-    '/control/(.+)', 'control.Edit',
-
     # action module
-    '/action', 'action.Index',
-    '/action/new', 'action.New',
-    '/action/(.+)/del', 'action.Delete',
-	'/action/(.+)/fun', 'function.Index',
-    '/action/(.+)', 'action.Edit',
-    #'/function/new', 'function.New',
-    #'/function/(.+)/del', 'function.Delete',
-    #'/function/(.+)', 'function.Edit',	
+    '/action', action.app,
+
+    # function module
+    #'/function', function.app,
+
+    # control module
+    #'/control', control.app,
 
     # 404 page
     '.+', 'frame.NotFound'
