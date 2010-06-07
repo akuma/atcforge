@@ -24,9 +24,9 @@ function changeProduct(product_id) {
     <select name="product_id" onchange="changeProduct(this.value)">
       $for product in products:
         $if product.id == product_id:
-          <option value="$product.id" selected="selected">$product.cname</option>
+          <option value="$product.id" selected="selected">$product.cname ($product.ename)</option>
         $else:
-          <option value="$product.id">$product.cname</option>
+          <option value="$product.id">$product.cname ($product.ename)</option>
       $if not products:
       <option value="">请先维护产品信息</option>
     </select>
@@ -45,13 +45,16 @@ function changeProduct(product_id) {
     <tr>
       <td>$action.serial</td>
       <td>$action.name</td>
-      <td align="center">$action.state</td>
+      $if action.state == 1:
+        <td align="center">正常</td>
+      $else:
+        <td align="center"><span class="red">废弃</span></td>
       <td>$action.description</td>
       <td align="center">$action.modify_time</td>
       <td align="center">$action.creation_time</td>
       <td align="center">
         <a href="/action/$action.id">查看</a> |
-        <a href="/action/$action.id/fun">维护 Function</a> |
+        <a href="/function/a/$action.id">维护 Function</a> |
       </td>
     </tr>
   </table>

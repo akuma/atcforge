@@ -7,15 +7,15 @@ $var title: Function 列表
     <div class="other"><a href="/action" class="other">Action 列表</a></div>
     <div class="other"><a href="/action/new" class="other">新增 Action</a></div>
     <div class="unusable">修改 Action</div>
-    <div id="current"><a href="" class="current">Function 列表</a></div>
+    <div id="current"><a href="" class="current">组件功能列表</a></div>
     <div class="unusable">新增 Function</div>
     <div class="unusable">修改 Function</div>
   </div>
 </div>
 <div id="tableMain">
-  <div id="desc">Function 列表</div>
+  <div id="desc">功能列表</div>
   <div id="message">
-    <input type="button" class="colorButton" name="addBtn" value="新增 Function" onclick="alert('^^')" />
+    <input type="button" class="colorButton" name="addBtn" value="新增功能" onclick="alert('^^')" />
   </div>
   <table id="dataTable" border="0" align="center" cellpadding="5" cellspacing="1"> 
     <tr class="titleTr">
@@ -29,13 +29,15 @@ $var title: Function 列表
     $for function in functions:
     <tr>
       <td>$function.name</td>
-      <td align="center">$function.is_enable</td>
+      $if function.state == 1:
+        <td align="center">启用</td>
+      $else:
+        <td align="center"><span class="red">废弃</span></td>
       <td>$function.description</td>
       <td align="center">$function.modify_time</td>
       <td align="center">$function.creation_time</td>
       <td align="center">
         <a href="/function/$function.id">查看</a>
-        <a href="/function/$function.id/del">删除</a>
       </td>
     </tr>
   </table>

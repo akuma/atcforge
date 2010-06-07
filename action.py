@@ -13,35 +13,44 @@ urls = (
 )
 
 # Create a new form.
-def new_form(is_modify=False, product_id=None):
+def new_form(is_modify=False, product_id=None, action_id=None):
     product_vals = []
     products = product_model.get_products()
     for p in products:
         val = (p.id, p.cname + ' (' + p.ename + ')')
         product_vals.append(val)
 
+    # 验证 Action 编号是否已经存在
+    serial_check = web.form.Validator('编号已经存在', lambda i: not action_model.serial_exists(i.product_id, i.serial, action_id));
+
+    # 通用的字段
+    serial_fld = web.form.Textbox('serial', web.form.notnull, web.form.regexp('\d+', '组件编号必须为数字'), description='组件编号')
+    name_fld = web.form.Textbox('name', web.form.notnull, description='组件名称')
+    state_fld = web.form.Dropdown('state', [('1', '正常'), ('0', '废弃')], web.form.notnull, description='组件状态')
+    desc_fld = web.form.Textarea('description', web.form.notnull, rows=10, cols=80, description='描述信息')
+    button_fld = web.form.Button(' 保存 ', class_='colorButton')
+
     if is_modify:
+        # 设置修改页面的表单字段
         form = web.form.Form(
             web.form.Dropdown('product_id', product_vals, web.form.notnull, description='所属产品', disabled='disabled'),
             web.form.Hidden('product_id', value=product_id, description='所属产品'),
-            web.form.Textbox('serial', web.form.notnull, description='编号', class_='titleTd', ),
-            web.form.Textbox('name', web.form.notnull, description='名称', class_='titleTd'),
-            web.form.Dropdown('state', [('1', '正常'), ('0', '废弃')], web.form.notnull, description='状态'),
-            web.form.Textarea('description', web.form.notnull, rows=10, cols=80, description='描述信息'),
-            web.form.Button(' 保存 ', class_='colorButton')
+            serial_fld,
+            name_fld,
+            state_fld,
+            desc_fld,
+            button_fld,
+            validators=[serial_check]
         )
     else:
-        #action_model.serial_exists(1, 2)
-        serial_check = web.form.Validator('Action 编号已经存在', lambda x:
-                                          action_model.serial_exists(x.product_id, x.serial))
-#        serial_check = web.form.Validator('Action 编号已经存在', lambda x: int(x.serial) < 3)
+        # 设置新增页面的表单字段
         form = web.form.Form(
             web.form.Dropdown('product_id', product_vals, web.form.notnull, description='所属产品'),
-            web.form.Textbox('serial', web.form.notnull, description='编号', class_='titleTd'),
-            web.form.Textbox('name', web.form.notnull, description='名称', class_='titleTd'),
-            web.form.Dropdown('state', [('1', '正常'), ('0', '废弃')], web.form.notnull, description='状态'),
-            web.form.Textarea('description', web.form.notnull, rows=10, cols=80, description='描述信息'),
-            web.form.Button(' 保存 ', class_='colorButton'),
+            serial_fld,
+            name_fld,
+            state_fld,
+            desc_fld,
+            button_fld,
             validators=[serial_check]
         )
 
@@ -80,12 +89,12 @@ class Edit:
 
     def GET(self, id):
         action = action_model.get_action(id)
-        form = new_form(True, action.product_id)
+        form = new_form(True, action.product_id, id)
         form.fill(action)
         return render.action.actionEdit(form)
 
     def POST(self, id):
-        form = new_form(True)
+        form = new_form(True, action_id=id)
 
         if not form.validates():
             return render.action.actionEdit(form)

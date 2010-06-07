@@ -4,7 +4,7 @@ import web
 import frame
 import product
 import action
-#import function
+import function
 #import control
 
 ### Url mappings
@@ -19,7 +19,7 @@ urls = (
     '/action', action.app,
 
     # function module
-    #'/function', function.app,
+    '/function', function.app,
 
     # control module
     #'/control', control.app,

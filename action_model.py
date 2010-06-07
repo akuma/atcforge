@@ -16,9 +16,13 @@ def get_action(id):
     except IndexError:
         return None
 
-def serial_exists(product_id, serial):
-    serial = db.select('at_action', what='serial', where='product_id=$product_id AND serial=$serial', vars=locals())
-    if serial:
+def serial_exists(product_id, serial, action_id=None):
+    if action_id:
+        result = db.select('at_action', what='serial', where='product_id=$product_id AND serial=$serial AND id<>$action_id', vars=locals())
+    else:
+        result = db.select('at_action', what='serial', where='product_id=$product_id AND serial=$serial', vars=locals())
+
+    if result:
         return True
     else:
         return False

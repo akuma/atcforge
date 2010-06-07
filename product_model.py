@@ -13,6 +13,17 @@ def get_product(id):
     except IndexError:
         return None
 
+def ename_exists(ename, id=None):
+    if id:
+        result = db.select('at_product', where='id<>$id AND ename=$ename', vars=locals())
+    else:
+        result = db.select('at_product', where='ename=$ename', vars=locals())
+
+    if result:
+        return True
+    else:
+        return False
+
 def new_product(ename, cname, description):
     id = model.guid()
     db.insert('at_product', id=id, ename=ename, cname=cname, description=description)

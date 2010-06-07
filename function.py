@@ -1,56 +1,67 @@
 #coding=utf-8
 
 import web
-import model
+import action_model
+import function_model
 from template import render
+
+urls = (
+    '/a/(.+)', 'Index',
+    '/new/(.+)', 'New',
+    '/(.+)', 'Edit',
+)
+
+def func_form():
+    form = web.form.Form(
+        web.form.Textbox('name', web.form.notnull, description='功能名称'),
+        web.form.Dropdown('state', [('1', '正常'), ('0', '废弃')], web.form.notnull, description='功能状态'),
+        web.form.Textarea('description', web.form.notnull, rows=10, cols=80, description='描述信息'),
+        web.form.Button(' 保存 ', class_='colorButton')
+    )
+    return form
 
 class Index:
 
     def GET(self, action_id):
-        functions = model.get_functions(action_id)
-        return render.functionList(functions)
+        functions = function_model.get_functions(action_id)
+        return render.function.functionList(functions)
 
 class New:
 
-    form = web.form.Form(
-        web.form.Textbox('name', web.form.notnull, description='名称', class_='titleTd'),
-        web.form.Dropdown('is_enable', ['YES', 'NO'], web.form.notnull, description='是否启用'),
-        web.form.Textarea('description', web.form.notnull, rows=10, cols=80, description='描述信息'),
-        web.form.Button(' 保存 ', class_='colorButton'),
-    )
+    def GET(self, action_id):
+        form = func_form()
+        return render.function.functionNew(form)
 
-    def GET(self):
-        form = self.form()
-        return render.functionNew(form)
-
-    def POST(self):
-        form = self.form()
+    def POST(self, action_id):
+        form = func_form()
 
         if not form.validates():
-            return render.functionNew(form)
+            return render.function.functionNew(form)
 
-        model.new_function(form.d.name, form.d.is_enable, form.d.description)
-        raise web.seeother('/function')
+        function_model.new_function(action_id, form.d.name, form.d.state, form.d.description)
+        raise web.seeother('/')
 
 class Edit:
 
     def GET(self, id):
-        function = model.get_function(id)
-        form = New.form()
+        form = func_form()
+        function = function_model.get_function(id)
         form.fill(function)
-        return render.functionEdit(form)
+        return render.function.functionEdit(form)
 
     def POST(self, id):
-        form = New.form()
+        form = func_form()
 
         if not form.validates():
-            return render.functionEdit(form)
+            return render.function.functionEdit(form)
 
-        model.update_function(id, form.d.name, form.d.is_enable, form.d.description)
-        raise web.seeother('/function')
+        function_model.update_function(id, form.d.name, form.d.state, form.d.description)
+        raise web.seeother('/')
 
 class Delete:
 
     def GET(self, id):
-        model.del_function(id)
-        raise web.seeother('/function')
+        function_model.del_function(id)
+        raise web.seeother('/')
+
+app = web.application(urls, globals())
