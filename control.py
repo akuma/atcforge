@@ -2,13 +2,15 @@
 
 import web
 import product_model
+import action_model
 import control_model
 from template import render
 
 urls = (
     '/?', 'Index',
     '/new', 'New',
-    '/(.+)/del', 'Delete',
+    '/action/(.+)', 'ActionList',
+    '/del/(.+)', 'Delete',
     '/(.+)', 'Edit'
 )
 
@@ -33,6 +35,12 @@ class Index:
     def GET(self):
         controls = control_model.get_controls()
         return render.control.controlList(controls)
+
+class ActionList:
+
+    def GET(self, control_id):
+        actions = action_model.get_action_of_control(control_id)
+        return render.control.action_list(control_id, actions)
 
 class New:
 

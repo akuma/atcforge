@@ -16,6 +16,12 @@ def get_action(id):
     except IndexError:
         return None
 
+def get_action_of_control(control_id):
+    return db.query('SELECT a.id, a.serial, a.name, a.state, a.description, a.modify_time, r.is_enable \
+                     FROM at_action a, at_action_ref r \
+                     WHERE a.id = r.action_id AND r.control_id = $control_id \
+                     ORDER BY r.action_order', vars={'control_id': control_id})
+
 def serial_exists(product_id, serial, action_id=None):
     if action_id:
         result = db.select('at_action', what='serial', where='product_id=$product_id AND serial=$serial AND id<>$action_id', vars=locals())
