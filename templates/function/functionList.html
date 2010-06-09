@@ -1,21 +1,21 @@
-$def with (functions)
-$var title: Function 列表
+$def with (action_id, functions)
+$var title: 测试组件列表
 
-<div id="navigator">Action 管理 &gt;&gt; Function 列表</div>
+<div id="navigator">测试组件管理 &gt;&gt; 测试功能列表</div>
 <div id="titleMain">
   <div class="modules">
-    <div class="other"><a href="/action" class="other">Action 列表</a></div>
-    <div class="other"><a href="/action/new" class="other">新增 Action</a></div>
-    <div class="unusable">修改 Action</div>
-    <div id="current"><a href="" class="current">组件功能列表</a></div>
-    <div class="unusable">新增 Function</div>
-    <div class="unusable">修改 Function</div>
+    <div class="other"><a href="/action" class="other">测试组件列表</a></div>
+    <div class="other"><a href="/action/new" class="other">新增测试组件</a></div>
+    <div class="other"><a href="/action/$action_id" class="other">修改测试组件</a></div>
+    <div id="current"><a href="" class="current">测试功能列表</a></div>
+    <div class="other"><a href="/function/new/$action_id" class="other">新增测试功能</a></div>
+    <div class="unusable">修改测试组件</div>
   </div>
 </div>
 <div id="tableMain">
-  <div id="desc">功能列表</div>
+  <div id="desc">测试功能列表</div>
   <div id="message">
-    <input type="button" class="colorButton" name="addBtn" value="新增功能" onclick="alert('^^')" />
+    <input type="button" class="colorButton" name="addBtn" value="新增测试功能" onclick="location.href='/function/new/$action_id'" />
   </div>
   <table id="dataTable" border="0" align="center" cellpadding="5" cellspacing="1"> 
     <tr class="titleTr">
@@ -37,7 +37,7 @@ $var title: Function 列表
       <td align="center">$function.modify_time</td>
       <td align="center">$function.creation_time</td>
       <td align="center">
-        <a href="/function/$function.id">查看</a>
+        <a href="/function/$action_id,$function.id">查看</a>
       </td>
     </tr>
   </table>

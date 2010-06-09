@@ -5,7 +5,7 @@ import frame
 import product
 import action
 import function
-#import control
+import control
 
 ### Url mappings
 urls = (
@@ -22,7 +22,7 @@ urls = (
     '/function', function.app,
 
     # control module
-    #'/control', control.app,
+    '/control', control.app,
 
     # 404 page
     '.+', 'frame.NotFound'

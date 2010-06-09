@@ -8,7 +8,7 @@ from template import render
 urls = (
     '/a/(.+)', 'Index',
     '/new/(.+)', 'New',
-    '/(.+)', 'Edit',
+    '/(.+),(.+)', 'Edit',
 )
 
 def func_form():
@@ -24,39 +24,39 @@ class Index:
 
     def GET(self, action_id):
         functions = function_model.get_functions(action_id)
-        return render.function.functionList(functions)
+        return render.function.functionList(action_id, functions)
 
 class New:
 
     def GET(self, action_id):
         form = func_form()
-        return render.function.functionNew(form)
+        return render.function.functionNew(action_id, form)
 
     def POST(self, action_id):
         form = func_form()
 
         if not form.validates():
-            return render.function.functionNew(form)
+            return render.function.functionNew(action_id, form)
 
         function_model.new_function(action_id, form.d.name, form.d.state, form.d.description)
-        raise web.seeother('/')
+        raise web.seeother('/a/' + action_id)
 
 class Edit:
 
-    def GET(self, id):
+    def GET(self, action_id, function_id):
         form = func_form()
-        function = function_model.get_function(id)
+        function = function_model.get_function(function_id)
         form.fill(function)
-        return render.function.functionEdit(form)
+        return render.function.functionEdit(action_id, function_id, form)
 
-    def POST(self, id):
+    def POST(self, action_id, function_id):
         form = func_form()
 
         if not form.validates():
-            return render.function.functionEdit(form)
+            return render.function.functionEdit(action_id, function_id, form)
 
-        function_model.update_function(id, form.d.name, form.d.state, form.d.description)
-        raise web.seeother('/')
+        function_model.update_function(function_id, form.d.name, form.d.state, form.d.description)
+        raise web.seeother('/a/' + action_id)
 
 class Delete:
 

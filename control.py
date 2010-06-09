@@ -1,6 +1,7 @@
 #coding=utf-8
 
 import web
+import product_model
 import control_model
 from template import render
 
@@ -11,56 +12,80 @@ urls = (
     '/(.+)', 'Edit'
 )
 
+def new_form():
+    product_vals = []
+    products = product_model.get_products()
+    for p in products:
+        val = (p.id, p.cname + ' (' + p.ename + ')')
+        product_vals.append(val)
+
+    form = web.form.Form(
+        web.form.Dropdown('product_id', product_vals, web.form.notnull, description='所属产品'),
+        web.form.Textbox('name', web.form.notnull, description='文件名称'),
+        web.form.Dropdown('is_enable', [('1', '启用'), ('0', '停用')], web.form.notnull, description='是否启用'),
+        web.form.Textarea('description', web.form.notnull, rows=10, cols=80, description='描述信息'),
+        web.form.Button(' 保存 ', class_='colorButton'),
+    )
+    return form
+
 class Index:
 
     def GET(self):
         controls = control_model.get_controls()
-        return render.index(controls)
+        return render.control.controlList(controls)
 
 class New:
 
+    """
+    product_vals = []
+    products = product_model.get_products()
+    for p in products:
+        val = (p.id, p.cname + ' (' + p.ename + ')')
+        product_vals.append(val)
+
     form = web.form.Form(
-        web.form.Textbox('name', web.form.notnull, description='文件名称', class_='titleTd'),
-        web.form.Dropdown('encoding', ['UTF-8', 'GBK'], web.form.notnull, description='文件编码'),
-        web.form.Dropdown('is_enable', ['YES', 'NO'], web.form.notnull, description='是否启用'),
+        web.form.Dropdown('product_id', product_vals, web.form.notnull, description='所属产品'),
+        web.form.Textbox('name', web.form.notnull, description='文件名称'),
+        web.form.Dropdown('is_enable', [('1', '启用'), ('0', '停用')], web.form.notnull, description='是否启用'),
         web.form.Textarea('description', web.form.notnull, rows=10, cols=80, description='描述信息'),
         web.form.Button(' 保存 ', class_='colorButton'),
     )
+    """
 
     def GET(self):
-        form = self.form()
-        return render.controlNew(form)
+        form = new_form()
+        return render.control.controlNew(form)
 
     def POST(self):
-        form = self.form()
+        form = new_form()
 
         if not form.validates():
-            return render.controlNew(form)
+            return render.control.controlNew(form)
 
-        control_model.new_control(form.d.name, form.d.encoding, form.d.is_enable, form.d.description)
-        raise web.seeother('/control')
+        control_model.new_control(form.d.product_id, form.d.name, form.d.is_enable, form.d.description)
+        raise web.seeother('/')
 
 class Edit:
 
     def GET(self, id):
         control = control_model.get_control(id)
-        form = New.form()
+        form = new_form()
         form.fill(control)
-        return render.controlEdit(form)
+        return render.control.controlEdit(form)
 
     def POST(self, id):
-        form = New.form()
+        form = new_form()
 
         if not form.validates():
-            return render.controlEdit(form)
+            return render.control.controlEdit(form)
 
-        control_model.update_control(id, form.d.name, form.d.encoding, form.d.is_enable, form.d.description)
-        raise web.seeother('/control')
+        control_model.update_control(id, form.d.name, form.d.is_enable, form.d.description)
+        raise web.seeother('/')
 
 class Delete:
 
     def GET(self, id):
         control_model.del_control(id)
-        raise web.seeother('/control')
+        raise web.seeother('/')
 
 app = web.application(urls, globals())

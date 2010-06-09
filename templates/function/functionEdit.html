@@ -1,15 +1,15 @@
-$def with (action_id, form)
-$var title: 修改测试组件
+$def with (action_id, function_id, form)
+$var title: 修改测试功能
 
-<div id="navigator">测试组件管理 &gt;&gt; 修改测试组件</div>
+<div id="navigator">测试组件管理 &gt;&gt; 修改测试功能</div>
 <div id="titleMain">
   <div class="modules">
     <div class="other"><a href="/action" class="other">测试组件列表</a></div>
     <div class="other"><a href="/action/new" class="other">新增测试组件</a></div>
-    <div id="current"><a href="/action/$action_id" class="current">修改测试组件</a></div>
+    <div class="other"><a href="/action/$action_id" class="other">修改测试组件</a></div>
     <div class="other"><a href="/function/a/$action_id" class="other">测试功能列表</a></div>
-    <div class="unusable">新增测试功能</div>
-    <div class="unusable">修改测试功能</div>
+    <div class="other"><a href="/function/new/$action_id" class="other">新增测试功能</a></div>
+    <div id="current"><a href="/function/$action_id,$function_id" class="current">修改测试功能</a></div>
   </div>
 </div>
 <div id="tableMain">

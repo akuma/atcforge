@@ -53,7 +53,6 @@ create table at_control (
     id char(32) primary key, -- uuid
     product_id char(32) not null, -- 所属产品ID，即 at_product.id
     name varchar(50) not null, -- 控制文件名称
-    encoding varchar(10) default 'UTF-8' null, -- 文件编码
     is_enable integer default 1 not null, -- 是否启用：0否 | 1是
     description varchar(100) null, -- 文件描述
     modify_time timestamp default CURRENT_TIMESTAMP not null,

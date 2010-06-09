@@ -91,13 +91,13 @@ class Edit:
         action = action_model.get_action(id)
         form = new_form(True, action.product_id, id)
         form.fill(action)
-        return render.action.actionEdit(form)
+        return render.action.actionEdit(id, form)
 
     def POST(self, id):
         form = new_form(True, action_id=id)
 
         if not form.validates():
-            return render.action.actionEdit(form)
+            return render.action.actionEdit(id, form)
 
         action_model.update_action(id, form.d.serial, form.d.name, form.d.state, form.d.description)
         raise web.seeother('/p/' + form.d.product_id)
